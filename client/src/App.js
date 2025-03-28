@@ -9,9 +9,18 @@ import Register from "./components/register/Register";
 import Techniques from "./components/techniques/Techniques";
 import UserInfo from "./components/user/UserInfo";
 import BlogPage from "./components/blogs/blog";
+import FetchData from "./components/FetchData";
+import SendData from "./components/SendData";
+import UpdateData from "./components/UpdateData";
 
 function App() {
   return (
+    <div>
+      <h1>Farm-Flow Integration</h1>
+      <FetchData />
+      <SendData />
+      <UpdateData />
+    </div>
     <Router>
       <Navbar />
       <main style={{ paddingTop: "84px" }}>
