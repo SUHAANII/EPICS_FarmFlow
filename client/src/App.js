@@ -70,10 +70,16 @@ function App() {
 
 function MainContent() {
   const location = useLocation();
-  const applyPadding = location.pathname !== "/"; // Apply padding to all pages except Home
+  // const applyPadding = location.pathname !== "/"; // Apply padding to all pages except Home
+  const whiteTextPages = ["/"];  
+  const textColor = whiteTextPages.includes(location.pathname) ? "white" : "black";
+
 
   return (
-    <main style={{ paddingTop: applyPadding ? "80px" : "0px" }}>
+    <main style={{ 
+      paddingTop: location.pathname !== "/" ? "80px" : "0px",  // Apply padding except on Home
+      color: textColor  // Apply font color based on route
+    }}>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -88,5 +94,5 @@ function MainContent() {
 
 export default App;
 
-//testing
+
 

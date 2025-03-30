@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { styled } from "@mui/system";
 import logo from "../../data/logo.png";
 
-// Styled AppBar (Remove sticky prop from styled)
+// Styled AppBar
 const StyledAppBar = styled(AppBar)({
   background: "transparent",
   boxShadow: "none",
@@ -16,8 +16,9 @@ const StyledAppBar = styled(AppBar)({
   transition: "background 0.3s ease-in-out",
 });
 
-const StyledLink = styled(Link)({
-  color: "Black",
+// Dynamic StyledLink that will adapt color based on the current route
+const StyledLink = styled(Link)(({ isHomePage }) => ({
+  color: isHomePage ? "white" : "black",
   textDecoration: "none",
   fontWeight: "bold",
   fontSize: "16px",
@@ -26,7 +27,7 @@ const StyledLink = styled(Link)({
     color: "rgb(69, 110, 167)",
     textDecoration: "underline",
   },
-});
+}));
 
 const LoginButton = styled(Button)({
   background: "#2E7D32",
@@ -48,14 +49,15 @@ const Logo = styled("img")({
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [sticky, setSticky] = useState(false);
-
+  const isHomePage = location.pathname === "/";
+  
   // Scroll event listener to detect sticky navbar
   useEffect(() => {
     const handleScroll = () => {
       setSticky(window.scrollY > 50);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -65,27 +67,32 @@ const Navbar = () => {
       position="static"
       sx={{
         background: sticky
-      ? "linear-gradient(to left,rgb(35, 74, 18) 11%, #7D7E7E 76%, #131516 100%)"
-      : "transparent",
-    boxShadow: sticky ? "0px 4px 10px rgba(0, 0, 0, 0.1)" : "none",
-    transition: "all 0.3s ease-in-out", // Smooth transition
-    padding: sticky ? ".2px 20px" : "12px 20px", // Reduce padding when sticky
+          ? "linear-gradient(to left,rgb(35, 74, 18) 11%, #7D7E7E 76%, #131516 100%)"
+          : "transparent",
+        boxShadow: sticky ? "0px 4px 10px rgba(0, 0, 0, 0.1)" : "none",
+        transition: "all 0.3s ease-in-out", // Smooth transition
+        padding: sticky ? ".2px 20px" : "12px 20px", // Reduce padding when sticky
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Box onClick={() => navigate("/")} sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
           <Logo src={logo} alt="FarmFlow Logo" />
-          <Typography variant="h6" sx={{ marginLeft: "10px", fontWeight: "bold" }}>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              marginLeft: "10px", 
+              fontWeight: "bold",
+              color: isHomePage ? "white" : "black" // Dynamic logo text color
+            }}
+          >
             FARMFlow
           </Typography>
         </Box>
-
         <Box sx={{ display: "flex", alignItems: "center", marginLeft: "auto" }}>
-          <StyledLink to="/">Home</StyledLink>
-          <StyledLink to="/techniques">Techniques</StyledLink>
-          <StyledLink to="/userinfo">User Info</StyledLink>
+          <StyledLink to="/" isHomePage={isHomePage}>Home</StyledLink>
+          <StyledLink to="/techniques" isHomePage={isHomePage}>Techniques</StyledLink>
+          <StyledLink to="/userinfo" isHomePage={isHomePage}>User Info</StyledLink>
         </Box>
-
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <LoginButton onClick={() => navigate("/login")}>Login</LoginButton>
           <LoginButton onClick={() => navigate("/register")}>Register</LoginButton>
