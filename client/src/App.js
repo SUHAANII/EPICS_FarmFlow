@@ -9,20 +9,24 @@ import Register from "./components/register/Register";
 import Techniques from "./components/techniques/Techniques";
 import UserInfo from "./components/user/UserInfo";
 import BlogPage from "./components/blogs/blog";
-import FetchData from "./components/FetchData";
-import SendData from "./components/SendData";
-import UpdateData from "./components/UpdateData";
+// import FetchData from "./components/Fetchdata";
+// import SendData from "./components/SendData";
+// import UpdateData from "./components/Update";
 
 function App() {
   return (
+    <>
+
+
     <div>
-      <h1>Farm-Flow Integration</h1>
-      <FetchData />
+      {/* <h1>Farm-Flow Integration</h1> */}
+      {/* <FetchData />
       <SendData />
-      <UpdateData />
+      <UpdateData /> */}
     </div>
     <Router>
       <Navbar />
+      <Home/>
       <main style={{ paddingTop: "84px" }}>
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -31,11 +35,12 @@ function App() {
             <Route path="/userinfo" element={<UserInfo />} />
             <Route path="/blog" element={<BlogPage />} />
             {/* <Route path="/forgot-password" element={<ForgotPasswordPage />} />   */}
-          <Route path="/" element={<Home/>} />
+          {/* <Route path="/" element={<Home/>} /> */}
         </Routes>
       </main>
       <Footer />
     </Router>
+    </>
   );
 }
 

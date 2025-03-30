@@ -14,9 +14,11 @@ const HeroSection = () => {
   return (
     <Box id="home"
       sx={{
+        width:"100%",
         position: "relative",
-        height: "100vh",
-        backgroundImage: `url(${Image})`, // 🔄 Replace with your actual image
+        minHeight: "100vh",
+        backgroundImage: `url(${Image})`,
+        background: "linear-gradient(rgba(8,0,58,.7), rgba(8,0,58,0.7)), ",   //`url(${Image})`, // 🔄 Replace with your actual image
         backgroundSize: "cover",
         backgroundPosition: "center",
         display: "flex",
@@ -26,6 +28,8 @@ const HeroSection = () => {
         color: "black",
         textAlign: "center",
         // px: 2,
+
+        
       }}
     >
       <Box
