@@ -17,7 +17,7 @@ const StyledAppBar = styled(AppBar)({
 });
 
 const StyledLink = styled(Link)({
-  color: "white",
+  color: "Black",
   textDecoration: "none",
   fontWeight: "bold",
   fontSize: "16px",
