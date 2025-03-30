@@ -26,8 +26,7 @@ function App() {
     </div>
     <Router>
       <Navbar />
-      <Home/>
-      <main style={{ paddingTop: "84px" }}>
+      <main>
         <Routes>
           <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -35,7 +34,7 @@ function App() {
             <Route path="/userinfo" element={<UserInfo />} />
             <Route path="/blog" element={<BlogPage />} />
             {/* <Route path="/forgot-password" element={<ForgotPasswordPage />} />   */}
-          {/* <Route path="/" element={<Home/>} /> */}
+          <Route path="/" element={<Home/>} />
         </Routes>
       </main>
       <Footer />
