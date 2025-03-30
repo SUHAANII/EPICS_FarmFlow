@@ -30,7 +30,7 @@ const HeroSection = () => {
         width: "100%",
         position: "relative",
         minHeight: "100vh",
-        background: `linear-gradient(rgba(8,0,58,.7), rgba(8,0,58,0.7)), url(${Image})`,
+        background: `linear-gradient(rgba(62, 52, 115, 0.7), rgba(8,0,58,0.7)), url(${Image})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed", // Parallax effect
