@@ -116,7 +116,7 @@ const HeroSection = () => {
               Explore Techniques
             </Button>
 
-            <Button
+            {/* <Button
               variant="outlined"
               sx={{
                 mt: 2,
@@ -138,7 +138,7 @@ const HeroSection = () => {
               }}
             >
               Learn More
-            </Button>
+            </Button> */}
           </Box>
         </Box>
       </Fade>
@@ -405,8 +405,6 @@ const RainwaterSection = () => {
                     "Saves water for drought-prone seasons",
                     "Reduces dependency on groundwater",
                     "Enhances crop yield and soil health",
-                    "Prevents soil erosion and flooding",
-                    "Lowers your water bills significantly",
                     "Contributes to sustainable water management"
                   ].map((benefit, index) => (
                     <Grid item xs={12} key={index}>
@@ -439,7 +437,7 @@ const RainwaterSection = () => {
                   ))}
                 </Grid>
 
-                <Button
+                {/* <Button
                   variant="contained"
                   sx={{
                     mt: 4,
@@ -455,7 +453,7 @@ const RainwaterSection = () => {
                   }}
                 >
                   Start Harvesting Today
-                </Button>
+                </Button> */}
               </Box>
             </Fade>
           </Grid>
@@ -505,10 +503,10 @@ const StatisticsSection = () => {
 
         <Grid container spacing={4} justifyContent="center">
           {[
-            { figure: "10,000+", label: "Farms Helped", color: "#2E7D32" },
-            { figure: "30%", label: "Water Savings", color: "#3BB4F2" },
-            { figure: "50M+", label: "Gallons Conserved", color: "#b0d56f" },
-            { figure: "85%", label: "Customer Satisfaction", color: "#FFD700" }
+            { figure: "0", label: "Farms Helped", color: "#2E7D32" },
+            { figure: "0%", label: "Water Savings", color: "#3BB4F2" },
+            { figure: "0", label: "Gallons Conserved", color: "#b0d56f" },
+            { figure: "0%", label: "Customer Satisfaction", color: "#FFD700" }
           ].map((stat, i) => (
             <Grid item xs={6} md={3} key={i}>
               <Fade in={true} style={{ transitionDelay: `${i * 200}ms` }}>
@@ -600,7 +598,7 @@ const CallToActionSection = () => {
             Get Started Now
           </Button>
 
-          <Button
+          {/* <Button
             variant="outlined"
             size="large"
             sx={{
@@ -618,7 +616,7 @@ const CallToActionSection = () => {
             }}
           >
             Learn More
-          </Button>
+          </Button> */}
         </Box>
       </Container>
     </Box>
