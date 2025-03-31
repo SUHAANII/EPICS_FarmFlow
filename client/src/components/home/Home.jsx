@@ -546,6 +546,7 @@ const StatisticsSection = () => {
 
 // 🌟 Call to Action Section (New)
 const CallToActionSection = () => {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -581,6 +582,7 @@ const CallToActionSection = () => {
           <Button
             variant="contained"
             size="large"
+            onClick={() => navigate("/login")}
             sx={{
               px: 4,
               py: 1.5,
