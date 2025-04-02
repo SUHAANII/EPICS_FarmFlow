@@ -8,12 +8,22 @@ const Dashboard = () => {
   const [profileError, setProfileError] = useState(null);
   const [techError, setTechError] = useState(null);
 
+  // Retrieve token from localStorage
+  const token = localStorage.getItem("token");
+
   // Fetch user profile (GET request)
   const fetchUserProfile = async () => {
     setLoadingProfile(true);
-    setProfileError(null); // Reset error before fetching
+    setProfileError(null);
+
     try {
-      const response = await fetch("http://localhost:5000/api/user/profile");
+      const response = await fetch("http://localhost:5000/api/user/profile", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Attach token
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`Profile Error: ${response.status} ${response.statusText}`);
@@ -39,6 +49,7 @@ const Dashboard = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Attach token
         },
         body: JSON.stringify(updatedProfile),
       });
@@ -49,6 +60,7 @@ const Dashboard = () => {
 
       const result = await response.json();
       setUserProfile(result);
+      alert("Profile updated successfully!");
     } catch (err) {
       setProfileError(err.message);
     }
@@ -57,9 +69,15 @@ const Dashboard = () => {
   // Fetch techniques (GET request)
   const fetchTechniques = async () => {
     setLoadingTechniques(true);
-    setTechError(null); // Reset error before fetching
+    setTechError(null);
+
     try {
-      const response = await fetch("http://localhost:5000/api/tech");
+      const response = await fetch("http://localhost:5000/api/tech", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`Techniques Error: ${response.status} ${response.statusText}`);
@@ -87,12 +105,14 @@ const Dashboard = () => {
       <h2>User Profile</h2>
       {loadingProfile && <p>Loading profile...</p>}
       {profileError && <p style={{ color: "red" }}>{profileError}</p>}
-      {userProfile && (
+      {userProfile ? (
         <div>
           <p><strong>Name:</strong> {userProfile.name}</p>
           <p><strong>Email:</strong> {userProfile.email}</p>
           <button onClick={updateUserProfile}>Update Profile</button>
         </div>
+      ) : (
+        !loadingProfile && <p>No profile data available.</p>
       )}
 
       {/* Techniques Section */}
