@@ -10,7 +10,7 @@ const Dashboard = () => {
   const fetchUserProfile = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/users/profile");
+      const response = await fetch("http://localhost:5000/api/user/profile");
 
       if (!response.ok) throw new Error("Failed to fetch user profile");
 
@@ -51,7 +51,7 @@ const Dashboard = () => {
   const fetchTechniques = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/techniques");
+      const response = await fetch("http://localhost:5000/api/tech");
 
       if (!response.ok) throw new Error("Failed to fetch techniques");
 
