@@ -8,20 +8,18 @@ const Dashboard = () => {
   const [profileError, setProfileError] = useState(null);
   const [techError, setTechError] = useState(null);
 
-  // Retrieve token from localStorage
-  const token = localStorage.getItem("token");
-
-  // Fetch user profile (GET request)
+  // ✅ Fetch User Profile (GET request)
   const fetchUserProfile = async () => {
     setLoadingProfile(true);
     setProfileError(null);
+    const token = localStorage.getItem("token"); // 🔥 Get token from localStorage
 
     try {
       const response = await fetch("http://localhost:5000/api/user/profile", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Attach token
+          "Authorization": `Bearer ${token}`, // 🔥 Attach token here
         },
       });
 
@@ -38,9 +36,10 @@ const Dashboard = () => {
     }
   };
 
-  // Update user profile (PUT request)
+  // ✅ Update User Profile (PUT request)
   const updateUserProfile = async () => {
     if (!userProfile) return;
+    const token = localStorage.getItem("token"); // 🔥 Get token
 
     const updatedProfile = { ...userProfile, name: "Updated Name" };
 
@@ -49,7 +48,7 @@ const Dashboard = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Attach token
+          "Authorization": `Bearer ${token}`, // 🔥 Attach token here
         },
         body: JSON.stringify(updatedProfile),
       });
@@ -60,22 +59,23 @@ const Dashboard = () => {
 
       const result = await response.json();
       setUserProfile(result);
-      alert("Profile updated successfully!");
     } catch (err) {
       setProfileError(err.message);
     }
   };
 
-  // Fetch techniques (GET request)
+  // ✅ Fetch Techniques (GET request)
   const fetchTechniques = async () => {
     setLoadingTechniques(true);
     setTechError(null);
+    const token = localStorage.getItem("token"); // 🔥 Get token
 
     try {
       const response = await fetch("http://localhost:5000/api/tech", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, // 🔥 Attach token here
         },
       });
 
@@ -92,6 +92,12 @@ const Dashboard = () => {
     }
   };
 
+  // ✅ Logout Function
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // 🔥 Remove token on logout
+    window.location.href = "/login"; // Redirect to login page
+  };
+
   useEffect(() => {
     fetchUserProfile();
     fetchTechniques();
@@ -101,21 +107,20 @@ const Dashboard = () => {
     <div>
       <h1>Dashboard</h1>
 
-      {/* User Profile Section */}
+      {/* ✅ User Profile Section */}
       <h2>User Profile</h2>
       {loadingProfile && <p>Loading profile...</p>}
       {profileError && <p style={{ color: "red" }}>{profileError}</p>}
-      {userProfile ? (
+      {userProfile && (
         <div>
           <p><strong>Name:</strong> {userProfile.name}</p>
           <p><strong>Email:</strong> {userProfile.email}</p>
           <button onClick={updateUserProfile}>Update Profile</button>
+          <button onClick={handleLogout} style={{ marginLeft: "10px", color: "red" }}>Logout</button>
         </div>
-      ) : (
-        !loadingProfile && <p>No profile data available.</p>
       )}
 
-      {/* Techniques Section */}
+      {/* ✅ Techniques Section */}
       <h2>Techniques</h2>
       {loadingTechniques && <p>Loading techniques...</p>}
       {techError && <p style={{ color: "red" }}>{techError}</p>}
