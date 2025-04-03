@@ -2,8 +2,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-const createError = require("../utils/createError.js");
-
 exports.registerUser = async (req, res) => {
   try {
     console.log("📌 Register request received"); // Debug log
