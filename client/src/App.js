@@ -57,7 +57,6 @@ import Register from "./components/register/Register";
 import Techniques from "./components/techniques/Techniques";
 import UserInfo from "./components/user/UserInfo";
 import BlogPage from "./components/blogs/blog";
-import Dashboard from "./components/dashboard/Dashboard";
 
 function App() {
   return (
@@ -87,7 +86,6 @@ function MainContent() {
         <Route path="/techniques" element={<Techniques />} />
         <Route path="/userinfo" element={<UserInfo />} />
         <Route path="/blog" element={<BlogPage />} />
-        <Route path="/dashboard" element={<Dashboard />} /> 
         <Route path="/" element={<Home />} />
       </Routes>
     </main>

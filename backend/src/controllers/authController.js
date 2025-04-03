@@ -2,6 +2,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
+const createError = require("../utils/createError.js");
+
 exports.registerUser = async (req, res) => {
   try {
     console.log("📌 Register request received"); // Debug log
@@ -48,18 +50,34 @@ exports.registerUser = async (req, res) => {
 
 
 
-exports.loginUser = async (req, res) => {
+exports.loginUser = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: "Invalid credentials" });
+    if (!user) return next(createError(404, "User not found!"));
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
+    if (!isMatch) return next(createError(400, "Wrong password or username!"));
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
     res.json({ token, user });
+
+    // res.cookie("accessToken", token, {
+    //     httpOnly: true,
+    //   })
+    //   .status(200)
+    //   .send(info);
   } catch (err) {
-    res.status(500).json({ msg: "Server error" });
+    next(err);
   }
+};
+
+exports.logout = async (req, res) => {
+  res
+    .clearCookie("accessToken", {
+      sameSite: "none",
+      secure: true,
+    })
+    .status(200)
+    .send("User has been logged out.");
 };

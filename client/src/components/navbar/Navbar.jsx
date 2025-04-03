@@ -4,6 +4,8 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { styled } from "@mui/system";
 import logo from "../../data/logo.png";
 
+import newRequest from "../../utils/newRequest";
+
 // Styled AppBar
 const StyledAppBar = styled(AppBar)({
   background: "transparent",
@@ -16,7 +18,7 @@ const StyledAppBar = styled(AppBar)({
   transition: "background 0.3s ease-in-out",
 });
 
-// Dynamic StyledLink that will adapt color based on the current route
+// Styled Navigation Links
 const StyledLink = styled(Link)(({ isHomePage }) => ({
   color: isHomePage ? "white" : "black",
   textDecoration: "none",
@@ -29,12 +31,27 @@ const StyledLink = styled(Link)(({ isHomePage }) => ({
   },
 }));
 
-const LoginButton = styled(Button)({
+// Styled Buttons
+const AuthButton = styled(Button)({
   background: "#2E7D32",
   color: "white",
   borderRadius: "15px",
-  padding: "10px 15px",
+  padding: "8px 15px",
   marginLeft: "10px",
+  textTransform: "none",
+  "&:hover": {
+    backgroundColor: "#1B5E20",
+  },
+});
+
+// Logout Button Styling
+const LogoutButton = styled(Button)({
+  background: "#2E7D32",
+  color: "white",
+  borderRadius: "15px",
+  padding: "8px 15px",
+  marginLeft: "10px",
+  textTransform: "none",
   "&:hover": {
     backgroundColor: "#1B5E20",
   },
@@ -48,12 +65,13 @@ const Logo = styled("img")({
 });
 
 const Navbar = () => {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const [sticky, setSticky] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const [sticky, setSticky] = useState(false);
   const isHomePage = location.pathname === "/";
-  
-  // Scroll event listener to detect sticky navbar
+
+  // Scroll event listener for sticky navbar
   useEffect(() => {
     const handleScroll = () => {
       setSticky(window.scrollY > 50);
@@ -61,6 +79,16 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await newRequest.post("/auth/logout");
+      localStorage.removeItem("currentUser");
+      navigate("/");
+    } catch (err) {
+      console.error("Logout Error:", err);
+    }
+  };
 
   return (
     <StyledAppBar
@@ -70,32 +98,48 @@ const Navbar = () => {
           ? "linear-gradient(to left,rgb(35, 74, 18) 11%, #7D7E7E 76%, #131516 100%)"
           : "transparent",
         boxShadow: sticky ? "0px 4px 10px rgba(0, 0, 0, 0.1)" : "none",
-        transition: "all 0.3s ease-in-out", // Smooth transition
-        padding: sticky ? ".2px 20px" : "12px 20px", // Reduce padding when sticky
+        transition: "all 0.3s ease-in-out",
+        padding: sticky ? ".2px 20px" : "12px 20px",
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        {/* Logo & Title */}
         <Box onClick={() => navigate("/")} sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
           <Logo src={logo} alt="FarmFlow Logo" />
-          <Typography 
-            variant="h6" 
-            sx={{ 
-              marginLeft: "10px", 
+          <Typography
+            variant="h6"
+            sx={{
+              marginLeft: "10px",
               fontWeight: "bold",
-              color: isHomePage ? "white" : "black" // Dynamic logo text color
+              color: isHomePage ? "white" : "black",
             }}
           >
             FARMFlow
           </Typography>
         </Box>
+
+        {/* Navigation Links */}
         <Box sx={{ display: "flex", alignItems: "center", marginLeft: "auto" }}>
           <StyledLink to="/" isHomePage={isHomePage}>Home</StyledLink>
           <StyledLink to="/techniques" isHomePage={isHomePage}>Techniques</StyledLink>
           <StyledLink to="/userinfo" isHomePage={isHomePage}>User Info</StyledLink>
         </Box>
+
+        {/* Authentication Buttons */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <LoginButton onClick={() => navigate("/login")}>Login</LoginButton>
-          <LoginButton onClick={() => navigate("/register")}>Register</LoginButton>
+          {currentUser ? (
+            <>
+              <Typography sx={{ color: "white", fontWeight: "bold", marginRight: "10px" }}>
+                {currentUser.username}
+              </Typography>
+              <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+            </>
+          ) : (
+            <>
+              <AuthButton onClick={() => navigate("/login")}>Login</AuthButton>
+              <AuthButton onClick={() => navigate("/register")}>Register</AuthButton>
+            </>
+          )}
         </Box>
       </Toolbar>
     </StyledAppBar>
@@ -103,6 +147,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-

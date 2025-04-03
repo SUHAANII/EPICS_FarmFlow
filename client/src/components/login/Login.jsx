@@ -1,55 +1,39 @@
 import React, { useState } from "react";
-import {
-  TextField,
-  Button,
-  Paper,
-  Typography,
-  Box,
-  InputAdornment,
-  IconButton,
-  Fade
-} from "@mui/material";
+import { TextField, Button, Paper, Typography, Box, InputAdornment, IconButton, Fade } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Visibility, VisibilityOff, Person, Email, Lock } from "@mui/icons-material";
 
+import newRequest from "../../utils/newRequest";
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
+  const [email, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await newRequest.post("/auth/login", { email, password });
+      localStorage.setItem("currentUser", JSON.stringify(res.data));
+      navigate("/")
+    } catch (err) {
+      setError(err.response.data);
+    }
+  };
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        background: "linear-gradient(135deg, #36A142 0%, #2D8A37 100%)",
-        position: "relative",
-        overflow: "hidden"
-      }}
-    >
+    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", background: "linear-gradient(135deg, #36A142 0%, #2D8A37 100%)", position: "relative", overflow: "hidden" }}>
       {/* Decorative circles */}
-      <Box sx={{
-        position: "absolute",
-        width: "300px",
-        height: "300px",
-        borderRadius: "50%",
-        background: "rgba(255, 255, 255, 0.1)",
-        top: "-100px",
-        left: "-100px"
-      }} />
-
-      <Box sx={{
-        position: "absolute",
-        width: "200px",
-        height: "200px",
-        borderRadius: "50%",
-        background: "rgba(255, 255, 255, 0.07)",
-        bottom: "50px",
-        right: "80px"
-      }} />
+      <Box sx={{ position: "absolute", width: "300px", height: "300px", borderRadius: "50%", background: "rgba(255, 255, 255, 0.1)", top: "-100px", left: "-100px" }} />
+      <Box sx={{ position: "absolute", width: "200px", height: "200px", borderRadius: "50%", background: "rgba(255, 255, 255, 0.07)", bottom: "50px", right: "80px" }} />
 
       <Fade in={true} timeout={800}>
-        <Paper
+        <Paper                 onSubmit={handleSubmit}
+
           elevation={10}
           sx={{
             padding: 5,
@@ -108,6 +92,8 @@ const Login = () => {
                   color: "#36A142"
                 }
               }}
+              
+              onChange={(e) => setUsername(e.target.value)}
             />
 
             <TextField
@@ -148,6 +134,8 @@ const Login = () => {
                   color: "#36A142"
                 }
               }}
+              onChange={(e) => setPassword(e.target.value)}
+
             />
 
             <Box sx={{ textAlign: "center", mt: 2 }}>
@@ -165,10 +153,13 @@ const Login = () => {
                     boxShadow: "0 6px 16px rgba(54, 161, 66, 0.4)",
                   }
                 }}
+                type="submit"
               >
                 LOGIN
               </Button>
             </Box>
+            {/* {error && error} */}
+
           </Box>
 
           <Box textAlign="center" mt={3} sx={{ position: "relative" }}>

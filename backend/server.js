@@ -7,7 +7,7 @@ const connectDB = require("./src/config/db");
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3000", methods: ["POST" , "GET"] ,credentials: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 
