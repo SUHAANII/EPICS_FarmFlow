@@ -36,7 +36,7 @@ exports.registerUser = async (req, res) => {
     console.log("✅ User saved successfully");
 
     console.log("🔑 Generating JWT Token...");
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
     console.log("🚀 Registration successful!");
     res.status(201).json({ token, user });
