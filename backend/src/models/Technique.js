@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const TechniqueSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  coverImage: { type: String, required: true },
+  coverImage: [{ type: String, required: true }],
   title: { type: String, required: true },
   subtitle: { type: String , required: true },
   description: { type: String, required: true },

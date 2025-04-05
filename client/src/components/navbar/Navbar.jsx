@@ -122,7 +122,7 @@ const Navbar = () => {
         <Box sx={{ display: "flex", alignItems: "center", marginLeft: "auto" }}>
           <StyledLink to="/" isHomePage={isHomePage}>Home</StyledLink>
           <StyledLink to="/techniques" isHomePage={isHomePage}>Techniques</StyledLink>
-          <StyledLink to="/userinfo" isHomePage={isHomePage}>User Info</StyledLink>
+          {/* <StyledLink to="/userinfo" isHomePage={isHomePage}>User Info</StyledLink> */}
         </Box>
 
         {/* Authentication Buttons */}

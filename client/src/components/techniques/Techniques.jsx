@@ -104,7 +104,7 @@ const Techniques = () => {
               textTransform: "none",
               boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
               "&:hover": { backgroundColor: "#01579b" },
-              marginRight: 1,
+              marginRight: 10,
             }}
           >
             Search
