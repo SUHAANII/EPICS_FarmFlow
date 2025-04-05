@@ -1,54 +1,30 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import {
-  Container,
-  Typography,
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Button,
-  Paper,
-  Avatar,
-  Grid,
-  Divider,
-  Chip,
-  IconButton,
-  Fade
-} from "@mui/material";
-import {
-  Edit,
-  Delete,
-  Favorite,
-  CloudQueue,
-  Person,
-  Phone,
-  Email,
-  LocationOn,
-  Landscape,
-  WbSunny,
-  BookmarkAdded
-} from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Container, Typography, Box, Card, CardContent, CardMedia, Button, Paper, Avatar, Grid, Divider, Chip, IconButton, Fade } from "@mui/material";
+import { Edit, Delete, Favorite, CloudQueue, Person, Phone, Email, LocationOn, Landscape, WbSunny, BookmarkAdded } from "@mui/icons-material";
+import newRequest from "../../utils/newRequest";
+import SavedTechniqueCard from "./savedtechniqueCard";
 
-const techniques = [
-  {
-    title: "Tanks",
-    image: "https://storage.googleapis.com/a1aa/image/aBOUKGa7rAuhVC0_LxltGfJq6dHWB6qDMnMpRhTV_d4.jpg",
-    description: "Tools to store collected rain water, reducing water wastage."
-  },
-  {
-    title: "Check Dams",
-    image: "https://storage.googleapis.com/a1aa/image/QEp2AWOKeIQfKkRaBRXK2c20g0h1IPJ7h1063m9lHUY.jpg",
-    description: "Small barriers that slow down water flow, increasing groundwater recharge."
-  },
-  {
-    title: "Percolation Pits",
-    image: "https://storage.googleapis.com/a1aa/image/dc3AFKuUixNKI0iIZgktWRC9ia8mjvzS_WUfQ0SoL_c.jpg",
-    description: "Small pits that allow rain water to percolate into the ground, increasing groundwater levels."
-  }
-];
+
 
 const UserInfo = () => {
+
+  const { id } = useParams();
+
+  const [savedTechniques, setSavedTechniques] = useState([]);
+
+  useEffect(() => {
+    const fetchSavedTechniques = async () => {
+      try {
+        const res = await newRequest.get(~`/techniques/saved/${id}`);
+        setSavedTechniques(res.data);
+      } catch (err) {
+        console.error("Error fetching saved techniques:", err);
+      }
+    };
+    fetchSavedTechniques();
+  }, []);
+
   return (
     <Box
       sx={{
@@ -291,86 +267,23 @@ const UserInfo = () => {
                   </Typography>
                 </Box>
 
-                <Box sx={{ p: 3 }}>
-                  <Grid container spacing={3}>
-                    {techniques.map((tech, index) => (
-                      <Grid item xs={12} sm={6} md={4} key={index}>
-                        <Card
-                          sx={{
-                            height: "100%",
-                            display: "flex",
-                            flexDirection: "column",
-                            borderRadius: 3,
-                            boxShadow: "0 6px 16px rgba(0, 0, 0, 0.1)",
-                            transition: "transform 0.2s ease, box-shadow 0.2s ease",
-                            "&:hover": {
-                              transform: "translateY(-8px)",
-                              boxShadow: "0 12px 20px rgba(0, 0, 0, 0.15)",
-                            }
-                          }}
-                        >
-                          <Box sx={{ position: "relative" }}>
-                            <CardMedia
-                              component="img"
-                              height="140"
-                              image={tech.image}
-                              alt={tech.title}
-                            />
-                            <IconButton
-                              sx={{
-                                position: "absolute",
-                                top: 8,
-                                right: 8,
-                                backgroundColor: "rgba(255, 255, 255, 0.9)",
-                                "&:hover": {
-                                  backgroundColor: "rgba(255, 255, 255, 1)",
-                                }
-                              }}
-                            >
-                              <Favorite sx={{ color: "#f44336" }} />
-                            </IconButton>
-                          </Box>
-                          <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
-                            <Typography
-                              variant="h6"
-                              sx={{
-                                mb: 1,
-                                fontWeight: "bold",
-                                color: "#36A142"
-                              }}
-                            >
-                              {tech.title}
-                            </Typography>
-                            <Typography
-                              variant="body2"
-                              color="text.secondary"
-                              sx={{ mb: 2, flexGrow: 1 }}
-                            >
-                              {tech.description}
-                            </Typography>
-                            <Button
-                              component={Link}
-                              to="/blog"
-                              variant="contained"
-                              fullWidth
-                              sx={{
-                                backgroundColor: "#36A142",
-                                "&:hover": {
-                                  backgroundColor: "#2D8A37",
-                                },
-                                borderRadius: 6,
-                                textTransform: "none",
-                                fontWeight: "bold"
-                              }}
-                            >
-                              Learn More
-                            </Button>
-                          </CardContent>
-                        </Card>
+                <Grid item xs={12} md={7}>
+                  <Fade in timeout={800}>
+                    <div>
+                      <Grid container spacing={3}>
+                        {savedTechniques.length > 0 ? savedTechniques.map((item, index) => (
+                          <Grid item xs={12} sm={6} md={6} key={item._id}>
+                            <SavedTechniqueCard item={item} />
+                          </Grid>
+                        )) : (
+                          <Typography variant="body1" color="textSecondary" sx={{ m: 5 }}>
+                            You haven’t saved any techniques yet.
+                          </Typography>
+                        )}
                       </Grid>
-                    ))}
-                  </Grid>
-                </Box>
+                    </div>
+                  </Fade>
+                </Grid>
               </Paper>
             </Fade>
           </Grid>
