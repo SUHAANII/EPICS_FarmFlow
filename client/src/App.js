@@ -10,7 +10,7 @@ import Register from "./components/register/Register";
 import Techniques from "./components/techniques/Techniques";
 import UserInfo from "./components/user/UserInfo";
 import BlogPage from "./components/blogs/blog";
-import AdminTechniqueUpload from "./components/techniques/AdminTechniqueUpload";
+import PostTechnique from "./components/techniques/PostTechnique";
 
 // Main app component
 function App() {
@@ -43,8 +43,9 @@ function MainContent() {
         <Route path="/register" element={<Register />} />
         <Route path="/techniques" element={<Techniques />} />
         <Route path="/userinfo" element={<UserInfo />} />
+        <Route path="/technique/:id" element={<BlogPage />} />
         <Route path="/blog" element={<BlogPage />} />
-        <Route path="/admin/upload-technique" element={<AdminTechniqueUpload />} />
+        <Route path="/post-technique" element={<PostTechnique />} />        
         <Route path="/" element={<Home />} />
       </Routes>
     </main>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const TechniqueCard = ({ item, index }) => {
   return (
-    <Fade in={true} timeout={500 + index * 300}>
+    <Fade in={true} timeout={500}>
       <Card
         sx={{
           height: "100%",
@@ -20,13 +20,13 @@ const TechniqueCard = ({ item, index }) => {
           },
         }}
       >
-        <CardMedia component="img" height="200" image={item.image} alt={item.title} />
+        <CardMedia component="img" height="200" image={item.coverImage} alt={item.title} />
         <CardContent sx={{ flexGrow: 1, p: 3 }}>
           <Typography variant="h5" gutterBottom fontWeight="bold" color="#01579b">
             {item.title}
           </Typography>
           <Typography variant="body1" color="textSecondary" mb={2} sx={{ lineHeight: 1.6 }}>
-            {item.description}
+            {item.subtitle}
           </Typography>
           <Button
             component={Link}

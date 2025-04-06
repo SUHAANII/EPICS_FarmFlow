@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const connectDB = require("./src/config/db");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -10,6 +11,8 @@ const app = express();
 app.use(cors({ origin: "http://localhost:3000", methods: ["POST" , "GET"] ,credentials: true }));
 app.use(bodyParser.json());
 app.use(express.json());
+app.use(cookieParser());
+
 
 // Connect to Database
 connectDB();

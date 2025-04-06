@@ -111,6 +111,16 @@ const Techniques = () => {
           </Button>
         </Box>
       </Paper>
+      <Box>
+        <Button variant="contained" onClick={() => window.location.href = "/post-technique"}
+          sx={{backgroundColor: "#0288d1",color: "white",fontWeight: "bold",borderRadius: "50px",ml: -12,px: 3,py: 1.5,textTransform: "none",boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+            "&:hover": { backgroundColor: "#01579b" },
+            marginRight: 10,
+          }}
+        >
+          ADD TECHNIQUE
+        </Button>
+      </Box>
 
       {showResults && (
         <>
@@ -161,9 +171,12 @@ const Techniques = () => {
               </Typography>
             )}
           </Box>
+
         </>
+
       )}
     </Container>
+
   );
 };
 
