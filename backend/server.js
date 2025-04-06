@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 
 // Middleware
-app.use(cors({ origin: "http://localhost:3000", methods: ["POST" , "GET"] ,credentials: true }));
+app.use(cors({ origin: "https://epics-farm-flow-suhani-6t687rb7n.vercel.app/", methods: ["POST" , "GET"] ,credentials: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
