@@ -96,14 +96,11 @@ D --> E[Farmer Interaction]
 ## 🖼 Screenshots
 
 ### 📍 Home Page
-![Home Screenshot](https://epics-farm-flow.vercel.app/assets/home.png)
+(https://epics-farm-flow.vercel.app/assets/home.png)
 
 ### 📈 Smart Dashboard
-![Dashboard Screenshot](https://epics-farm-flow.vercel.app/assets/dashboard.png)
+(https://epics-farm-flow.vercel.app/assets/dashboard.png)
 
-*(Replace these image URLs with your actual project screenshots or keep these placeholders)*
-
----
 
 ## 🌍 Impact
 ✅ Helps farmers manage water sustainably  
